@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Budgetizer.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="android:windowBackground">@color/background_light</item>
+
+
+        <item name="fontFamily">@font/open_sans</item>
+        <item name="colorSurface">@color/color_surface</item>
+    </style>
+    <style name="Theme.Budgetizer.Home" />
+    <style name="Theme.Budgetizer.Onboarding" />
+    <style name="Theme.Budgetizer.Challenge" />
+
+    <style name="Theme.Budgetizer.Text" parent="TextAppearance.AppCompat">
+
+    </style>
+    <style name="Theme.Budgetizer.Text.Header" parent="TextAppearance.AppCompat.Large">
+
+    </style>
+
+    <style name="TextAppearance.DialogContent" parent="@style/TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+
+    <style name="TextAppearance.EmptyText" parent="@style/TextAppearance.DialogContent">
+        <item name="android:textColor">@color/text_primary_dark</item>
+    </style>
+</resources>

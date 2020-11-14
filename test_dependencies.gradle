@@ -1,0 +1,7 @@
+dependencies {
+    testImplementation "junit:junit:${versions.junit}"
+    androidTestImplementation "androidx.test.ext:junit:${versions.extJunit}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.espresso}"
+    androidTestImplementation "androidx.arch.core:core-testing:${versions.coreTesting}"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
+}

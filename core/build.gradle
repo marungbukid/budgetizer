@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply from: '../test_dependencies.gradle'
 apply from: '../shared_dependencies.gradle'
 
 android {
@@ -25,14 +24,11 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId names.applicationId
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
-        versionCode 1
-        versionName "1.0"
-        archivesBaseName = 'budgetizer'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -48,10 +44,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    dynamicFeatures = [':onboarding', ':challenge', ':profile']
-    buildFeatures {
-        viewBinding true
-    }
     packagingOptions {
         exclude "META-INF/AL2.0"
         exclude "META-INF/LGPL2.1"
@@ -59,11 +51,7 @@ android {
 }
 
 dependencies {
-    implementation project(":core")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
-    implementation "androidx.appcompat:appcompat:${versions.appCompat}"
-    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
-    implementation "androidx.room:room-ktx:${versions.room}"
+    implementation "androidx.room:room-runtime:${versions.room}"
 
-    kapt "androidx.room:room-compiler:${versions.room}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 }

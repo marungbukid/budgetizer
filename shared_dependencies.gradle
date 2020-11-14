@@ -1,0 +1,5 @@
+dependencies {
+    implementation "androidx.core:core-ktx:${versions.coreKtx}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "com.google.dagger:dagger:${versions.dagger}"
+}

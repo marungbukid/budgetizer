@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.marungbukid">
+    package="com.budgetizer">
 
     <application
+        android:name=".ui.BudgetizerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Budgetizer" />
+        android:theme="@style/Theme.Budgetizer">
+
+        <activity
+            android:name=".ui.HomeActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Budgetizer.Home">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <!-- Use an alias in case we want to change the launch activity later without breaking
+             homescreen shortcuts. Note must be defined after the targetActivity -->
+        <activity-alias
+            android:name=".Launcher"
+            android:label="@string/app_name"
+            android:targetActivity=".ui.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts"/>
+
+    </application>
 
 </manifest>

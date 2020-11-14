@@ -7,7 +7,9 @@
     android:background="?colorPrimary"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/spacing_extra_large"
+    android:padding="?actionBarSize"
+    android:paddingStart="@dimen/spacing_larger"
+    android:paddingEnd="@dimen/spacing_larger"
     android:theme="@style/Theme.Budgetizer.Overlay">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -24,9 +26,9 @@
         android:id="@+id/headerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_large"
         android:text="@string/label_home_header"
         app:layout_constraintBottom_toTopOf="@+id/header"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -36,10 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_extra_large"
-        app:fontFamily="@font/open_sans_bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/headerLabel"
+        tools:text="9,999,999.99" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

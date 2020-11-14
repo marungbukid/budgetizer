@@ -14,21 +14,30 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:toolbarId="@+id/toolbar"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleEnabled="false">
 
-            <include layout="@layout/content_header" />
+            <include
+                android:id="@+id/contentHeader"
+                app:layout_collapseMode="parallax"
+                layout="@layout/content_header" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:theme="@style/Theme.Budgetizer.Overlay"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingStart="@dimen/spacing_normal"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/Theme.Budgetizer.Overlay" />
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-   <include layout="@layout/content_home" />
+    <include
+        android:id="@+id/contentHome"
+        layout="@layout/content_home" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

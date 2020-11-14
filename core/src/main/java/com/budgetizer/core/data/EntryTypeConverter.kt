@@ -17,6 +17,7 @@
 package com.budgetizer.core.data
 
 import androidx.room.TypeConverter
+import com.budgetizer.core.entry.data.model.EntryType
 
 class EntryTypeConverter {
 

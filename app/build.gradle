@@ -28,8 +28,8 @@ android {
         applicationId names.applicationId
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
-        versionCode 1
-        versionName "1.0"
+        versionCode rootProject.gitCommitCount
+        versionName "1.0.${rootProject.gitCommitCount}"
         archivesBaseName = 'budgetizer'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -48,7 +48,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    dynamicFeatures = [':onboarding', ':challenge', ':profile']
+    dynamicFeatures = [':challenge', ':profile', ':entry']
     buildFeatures {
         viewBinding true
     }
@@ -65,5 +65,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
     implementation "androidx.room:room-ktx:${versions.room}"
 
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
     kapt "androidx.room:room-compiler:${versions.room}"
 }

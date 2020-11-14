@@ -21,8 +21,10 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.budgetizer.core.data.Entry
-import com.budgetizer.core.data.EntryType
+import com.budgetizer.core.dagger.entry.EntryDao
+import com.budgetizer.core.dagger.entry.EntryDatabase
+import com.budgetizer.core.entry.data.model.Entry
+import com.budgetizer.core.entry.data.model.EntryType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
@@ -48,25 +50,29 @@ class EntryDaoTest {
             id = 1,
             type = EntryType.EXPENSE,
             label = "Food",
-            tag = "food"
+            tags = listOf("food", "chicken"),
+            amount = 0.0
         ),
         Entry(
             id = 2,
             type = EntryType.EXPENSE,
             label = "Clothing",
-            tag = "util"
+            tags = listOf("clothing", "uniqlo"),
+            amount = 0.0
         ),
         Entry(
             id = 3,
             type = EntryType.EXPENSE,
             label = "Something",
-            tag = "util"
+            tags = listOf("something"),
+            amount = 0.0
         ),
         Entry(
             id = 4,
             type = EntryType.EXPENSE,
             label = "Test",
-            tag = "test"
+            tags = listOf("test"),
+            amount = 0.0
         )
     )
 
@@ -94,7 +100,8 @@ class EntryDaoTest {
             id = 5,
             type = EntryType.INCOME,
             label = "Food",
-            tag = "food"
+            tags = listOf("sup"),
+            amount = 0.0
         )
 
         entries.forEach { entryDao.insertEntry(it) }

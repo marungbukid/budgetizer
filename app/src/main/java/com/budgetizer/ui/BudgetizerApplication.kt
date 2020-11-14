@@ -16,6 +16,42 @@
 
 package com.budgetizer.ui
 
+import android.app.Activity
 import android.app.Application
+import android.content.Context
+import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
+import com.budgetizer.BuildConfig
+import com.budgetizer.core.dagger.CoreComponent
+import com.budgetizer.core.dagger.DaggerCoreComponent
+import timber.log.Timber
 
-class BudgetizerApplication : Application()
+class BudgetizerApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+
+        val nightMode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        } else {
+            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        }
+        setDefaultNightMode(nightMode)
+    }
+
+    private val coreComponent: CoreComponent by lazy {
+        DaggerCoreComponent.create()
+    }
+
+    companion object {
+        @JvmStatic
+        fun coreComponent(context: Context) =
+            (context.applicationContext as BudgetizerApplication).coreComponent
+    }
+}
+
+fun Activity.coreComponent() = BudgetizerApplication.coreComponent(this)

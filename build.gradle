@@ -17,8 +17,10 @@ buildscript { scriptHandler ->
             'junit'           : '4.13.1',
             'extJunit'        : '1.1.2',
             'espresso'        : '3.3.0',
+            'lifecycle'       : '2.2.0',
             'room'            : '2.2.5',
             'ktlint'          : '0.36.0',
+            'timber'          : '4.7.1'
     ]
     ext.names = [
             'applicationId': 'com.budgetizer'
@@ -31,6 +33,12 @@ buildscript { scriptHandler ->
 
 plugins {
     id 'com.diffplug.spotless' version '5.8.1'
+}
+
+ext {
+    // query git for the commit count to automate versioning.
+    gitCommitCount = 1 +
+            Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
 }
 
 subprojects {

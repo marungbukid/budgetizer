@@ -17,13 +17,16 @@
 package com.budgetizer.ui.entry
 
 import android.app.Activity
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.budgetizer.core.data.Entry
+import com.budgetizer.core.entry.data.model.Entry
+import com.budgetizer.databinding.ItemEntryBinding
 
 class EntriesAdapter(
     private val host: Activity
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val layoutInflater = LayoutInflater.from(host)
 
     var items = emptyList<Entry>()
         set(value) {
@@ -31,15 +34,29 @@ class EntriesAdapter(
             notifyDataSetChanged()
         }
 
+    init {
+        setHasStableIds(true)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+        return createEntryViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        (holder as EntryViewHolder).bind(items[position])
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return items.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return items[position].id
+    }
+
+    private fun createEntryViewHolder(
+        parent: ViewGroup
+    ): EntryViewHolder {
+        return EntryViewHolder(ItemEntryBinding.inflate(layoutInflater, parent, false))
     }
 }

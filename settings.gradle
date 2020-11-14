@@ -1,6 +1,6 @@
+include ':entry'
 include ':profile'
 include ':challenge'
-include ':onboarding'
 include ':core'
 include ':app'
 rootProject.name = "Budgetizer"

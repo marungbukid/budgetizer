@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.budgetizer.entry">
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/title_entry">
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:extractNativeLibs="false"
+        android:theme="@style/Theme.Budgetizer"
+        android:name="com.budgetizer.ui.BudgetizerApplication">
+        <activity
+            android:name="com.budgetizer.entry.ui.EntryActivity"
+            android:parentActivityName="com.budgetizer.ui.HomeActivity"
+            android:theme="@style/Theme.Budgetizer.Entry">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

@@ -52,6 +52,9 @@ android {
 
 dependencies {
     implementation "androidx.room:room-runtime:${versions.room}"
-
+    implementation "androidx.room:room-ktx:${versions.room}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+    kapt "androidx.room:room-compiler:${versions.room}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 }

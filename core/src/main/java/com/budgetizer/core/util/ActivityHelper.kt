@@ -25,7 +25,8 @@ private const val PACKAGE_NAME = "com.budgetizer"
 fun intentTo(addressableActivity: AddressableActivity): Intent {
     return Intent(Intent.ACTION_VIEW).setClassName(
         PACKAGE_NAME,
-        addressableActivity.className)
+        addressableActivity.className
+    )
 }
 
 interface AddressableActivity {
@@ -39,5 +40,13 @@ object Activities {
 
     object Challenge : AddressableActivity {
         override val className = "$PACKAGE_NAME.challenge.ui.ChallengeActivity"
+    }
+
+    object Profile : AddressableActivity {
+        override val className = "$PACKAGE_NAME.profile.ui.ProfileActivity"
+    }
+
+    object Entry : AddressableActivity {
+        override val className = "$PACKAGE_NAME.entry.ui.EntryActivity"
     }
 }

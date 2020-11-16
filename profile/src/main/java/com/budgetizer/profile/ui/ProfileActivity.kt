@@ -19,6 +19,7 @@ package com.budgetizer.profile.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.budgetizer.core.profile.data.model.Profile
+import com.budgetizer.profile.R
 import com.budgetizer.profile.dagger.inject
 import com.budgetizer.profile.databinding.ActivityProfileBinding
 import javax.inject.Inject
@@ -55,9 +56,9 @@ class ProfileActivity : AppCompatActivity() {
         binding.save.setOnClickListener {
             viewModel.saveProfile(
                 Profile(
-                    givenName = binding.givenName.text.toString(),
-                    familyName = binding.familyName.text.toString(),
-                    grossMonthlyIncome = binding.grossMonthlyIncome.text.toString().toDouble()
+                    givenName = binding.givenName.editText?.text.toString(),
+                    familyName = binding.familyName.editText?.text.toString(),
+                    grossMonthlyIncome = binding.grossMonthlyIncome.editText?.text.toString().toDouble()
                 )
             )
 
@@ -66,8 +67,10 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun updateProfile(profile: Profile) {
-        binding.givenName.setText(profile.givenName)
-        binding.familyName.setText(profile.familyName)
-        binding.grossMonthlyIncome.setText(profile.grossMonthlyIncome.toString())
+        binding.greetings.text = getString(R.string.greetings_profile, profile.givenName)
+        binding.message.text = getString(R.string.header_update)
+        binding.givenName.editText?.setText(profile.givenName)
+        binding.familyName.editText?.setText(profile.familyName)
+        binding.grossMonthlyIncome.editText?.setText(profile.grossMonthlyIncome.toString())
     }
 }

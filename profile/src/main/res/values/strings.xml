@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="greetings">Hi!</string>
+    <string name="greetings_profile">Hi, %1$s!</string>
+    <string name="header_message">To help Budgetizer manage your budget, please enter additional information. This can be edited later.</string>
+    <string name="header_update">Update your information</string>
+</resources>

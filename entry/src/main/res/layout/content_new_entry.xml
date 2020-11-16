@@ -27,8 +27,9 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:startIconDrawable="@drawable/ic_baseline_sort_24"
-                    android:hint="Type">
+                    android:hint="Type"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_baseline_sort_24">
 
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
@@ -39,11 +40,12 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/amount"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:startIconDrawable="@drawable/ic_baseline_attach_money_24"
-                    android:hint="Amount">
+                    android:hint="Amount"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_baseline_attach_money_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -55,16 +57,33 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/name"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Name"
                     app:startIconDrawable="@drawable/ic_baseline_import_contacts_24"
-                    android:hint="Name">
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/range"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Range"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton

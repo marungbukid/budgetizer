@@ -14,23 +14,9 @@
  * limitations under the License.
  */
 
-package com.budgetizer.core.dagger.entry
+package com.budgetizer.core.data.entry.model
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.budgetizer.core.entry.data.model.Entry
-
-@Dao
-interface EntryDao {
-
-    @Query("SELECT * FROM entry")
-    suspend fun getAll(): List<Entry>
-
-    @Query("SELECT * FROM entry WHERE id = :id")
-    suspend fun getEntry(id: Long): Entry
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEntry(entry: Entry)
+enum class EntryType {
+    INCOME,
+    EXPENSE
 }

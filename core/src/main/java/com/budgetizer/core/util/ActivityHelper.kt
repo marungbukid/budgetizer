@@ -47,6 +47,9 @@ object Activities {
     }
 
     object Entry : AddressableActivity {
+        const val EXTRA_UPDATE_ENTRY = "EXTRA_UPDATE_ENTRY"
+        const val EXTRA_DATE_ENTRY = "EXTRA_DATE_ENTRY"
+
         override val className = "$PACKAGE_NAME.entry.ui.EntryActivity"
     }
 }

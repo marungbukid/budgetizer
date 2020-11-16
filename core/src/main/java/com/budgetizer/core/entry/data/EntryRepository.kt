@@ -17,14 +17,22 @@
 package com.budgetizer.core.entry.data
 
 import com.budgetizer.core.data.Result
-import com.budgetizer.core.entry.data.model.Entry
+import com.budgetizer.core.data.entry.model.Entry
+import java.util.Date
 
 class EntryRepository constructor(
     private val localDataSource: EntryLocalDataSource
 ) {
 
-    suspend fun getEntries(): Result<List<Entry>> {
-        val localEntries = localDataSource.getEntries()
+    suspend fun getEntriesByDate(date: Date): Result<List<Entry>> {
+        val localEntries = localDataSource.getEntries(date)
+        if (localEntries is Result.Success) return localEntries
+
+        return Result.Error(Exception("Unable to fetch entries"))
+    }
+
+    suspend fun getMonthEntriesToDate(date: Date): Result<List<Entry>> {
+        val localEntries = localDataSource.getMonthEntriesToDate(date)
         if (localEntries is Result.Success) return localEntries
 
         return Result.Error(Exception("Unable to fetch entries"))
@@ -32,6 +40,10 @@ class EntryRepository constructor(
 
     suspend fun addEntry(entry: Entry) {
         localDataSource.addEntry(entry)
+    }
+
+    suspend fun updateEntry(entry: Entry) {
+        localDataSource.updateEntry(entry)
     }
 
     companion object {

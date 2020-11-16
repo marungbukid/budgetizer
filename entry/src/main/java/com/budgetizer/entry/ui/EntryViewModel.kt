@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.budgetizer.core.data.CoroutinesDispatcherProvider
 import com.budgetizer.core.entry.data.EntryRepository
-import com.budgetizer.core.entry.data.model.Entry
+import com.budgetizer.core.data.entry.model.Entry
 import kotlinx.coroutines.launch
 
 class EntryViewModel constructor(
@@ -30,5 +30,9 @@ class EntryViewModel constructor(
 
     fun addEntry(entry: Entry) = viewModelScope.launch(dispatcherProvider.computation) {
         entryRepository.addEntry(entry)
+    }
+
+    fun updateEntry(entry: Entry) = viewModelScope.launch(dispatcherProvider.computation) {
+        entryRepository.updateEntry(entry)
     }
 }

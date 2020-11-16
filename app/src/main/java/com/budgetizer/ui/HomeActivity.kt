@@ -31,15 +31,20 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.budgetizer.R
-import com.budgetizer.core.entry.data.model.Entry
-import com.budgetizer.core.entry.data.model.EntryType
+import com.budgetizer.core.data.entry.model.Entry
+import com.budgetizer.core.data.entry.model.EntryType
 import com.budgetizer.core.util.Activities
 import com.budgetizer.core.util.intentTo
 import com.budgetizer.core.util.toFixed
 import com.budgetizer.dagger.inject
 import com.budgetizer.databinding.ActivityHomeBinding
 import com.budgetizer.ui.entry.EntriesAdapter
+import com.budgetizer.ui.entry.EntriesManager
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.util.Date
 import javax.inject.Inject
+import kotlin.math.abs
 
 class HomeActivity : AppCompatActivity() {
 
@@ -48,6 +53,11 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var entriesAdapter: EntriesAdapter
+
+    private var curDate = System.currentTimeMillis()
+    private val selectedDate
+        get() = Date(curDate).toFixed()
+    private var entriesManager = EntriesManager(emptyList())
 
     private val noItemsEmptyText by lazy {
         val view = findViewById<ViewStub>(R.id.stub_no_items).inflate() as CardView
@@ -101,7 +111,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         fetchEntries()
-        updateHeader()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -118,6 +127,10 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.menu_date -> {
+                selectDate()
+                true
+            }
             R.id.menu_add_entry -> {
                 addEntry()
                 true
@@ -138,6 +151,9 @@ class HomeActivity : AppCompatActivity() {
                 is HomeEvents.EntriesUpdate -> {
                     updateEntries(events.entries)
                 }
+                is HomeEvents.MonthEntriesUpdate -> {
+                    updateBudget(events.entries)
+                }
             }
         })
     }
@@ -148,38 +164,39 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupToolbar() {
         binding.toolbar.inflateMenu(R.menu.home_menu)
-
-        supportActionBar?.apply {
-            setDisplayShowTitleEnabled(false)
-        }
+        binding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            binding.collapsingToolbar.title =
+                if (abs(verticalOffset) != binding.appbar.totalScrollRange)
+                    " " else selectedDate
+        })
     }
 
     private fun fetchEntries() {
-        viewModel.getEntries()
+        viewModel.getMonthEntriesToDate(Date(curDate))
+        viewModel.getEntriesByDate(Date(curDate))
     }
 
     private fun updateEntries(items: List<Entry>) {
-        entriesAdapter.items = items
+        entriesManager = EntriesManager(items)
+        entriesAdapter.items = entriesManager.getEntries()
 
         checkEmptyState()
-        updateHeader()
     }
 
-    private fun updateHeader() {
+    private fun updateBudget(items: List<Entry>) {
         viewModel.profile?.apply {
             val additional =
-                entriesAdapter.items
+                items
                     .filter { it.type == EntryType.INCOME }
-                    .sumByDouble { it.amount }
+                    .sumByDouble { it.calculatedAmount() }
             val negation =
-                entriesAdapter.items
+                items
                     .filter { it.type == EntryType.EXPENSE }
-                    .sumByDouble { it.amount }
+                    .sumByDouble { it.calculatedAmount() }
 
             val total = (grossMonthlyIncome + additional) - negation
-
-            binding.contentHeader.greeting.text = "Hi, $givenName!"
             binding.contentHeader.header.text = total.toFixed()
+            binding.contentHeader.greeting.text = "Hi, $givenName!"
         }
     }
 
@@ -192,11 +209,24 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun addEntry() {
-        startActivity(intentTo(Activities.Entry))
+        val intent = intentTo(Activities.Entry)
+        intent.putExtra(Activities.Entry.EXTRA_DATE_ENTRY, curDate)
+        startActivity(intent)
     }
 
     private fun setNoItemsVisibility(visibility: Int) {
         noItemsEmptyText.visibility = visibility
+    }
+
+    private fun selectDate() {
+        val builder = MaterialDatePicker.Builder.datePicker()
+        builder.build().also {
+            it.addOnPositiveButtonClickListener { unixTime ->
+                curDate = unixTime
+                fetchEntries()
+            }
+            it.show(supportFragmentManager, "picker")
+        }
     }
 }
 

@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package com.budgetizer.core.entry.data.model
+package com.budgetizer.core.data.entry.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
+import java.util.Date
 
+@Parcelize
 @Entity(tableName = "entry")
 data class Entry(
     @PrimaryKey(autoGenerate = true)
@@ -36,5 +40,24 @@ data class Entry(
     val amount: Double,
 
     @ColumnInfo(name = "tags")
-    val tags: List<String>
-)
+    val tags: List<String>,
+
+    @ColumnInfo(name = "entry_range")
+    var entryRange: EntryRange,
+
+    @ColumnInfo(name = "created_at")
+    val createdAt: Date,
+
+    @ColumnInfo(name = "updated_at")
+    val updatedAt: Date,
+) : Parcelable {
+
+    fun calculatedAmount(): Double {
+        return when (entryRange) {
+            EntryRange.WEEKLY -> amount * 4
+            EntryRange.HALF_MONTH -> amount * 2
+            EntryRange.TODAY,
+            EntryRange.MONTHLY -> amount * 1
+        }
+    }
+}

@@ -16,21 +16,30 @@
 
 package com.budgetizer.core.entry.data
 
-import com.budgetizer.core.dagger.entry.EntryDao
+import com.budgetizer.core.data.entry.EntryDao
 import com.budgetizer.core.data.CoroutinesDispatcherProvider
 import com.budgetizer.core.data.Result
-import com.budgetizer.core.entry.data.model.Entry
+import com.budgetizer.core.data.entry.model.Entry
 import javax.inject.Inject
 import kotlinx.coroutines.withContext
+import java.util.Date
 
 class EntryLocalDataSource @Inject constructor(
     private val entryDao: EntryDao,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
 
-    suspend fun getEntries(): Result<List<Entry>> = withContext(dispatcherProvider.io) {
+    suspend fun getEntries(date: Date): Result<List<Entry>> = withContext(dispatcherProvider.io) {
         return@withContext try {
-            Result.Success(entryDao.getAll())
+            Result.Success(entryDao.getEntryByDate(date.time))
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    suspend fun getMonthEntriesToDate(date: Date): Result<List<Entry>> = withContext(dispatcherProvider.io) {
+        return@withContext try {
+            Result.Success(entryDao.getMonthEntriesToDate(date.time))
         } catch (e: Exception) {
             Result.Error(e)
         }
@@ -38,5 +47,9 @@ class EntryLocalDataSource @Inject constructor(
 
     suspend fun addEntry(entry: Entry) = withContext(dispatcherProvider.io) {
         entryDao.insertEntry(entry)
+    }
+
+    suspend fun updateEntry(entry: Entry) = withContext(dispatcherProvider.io) {
+        entryDao.updateEntry(entry)
     }
 }

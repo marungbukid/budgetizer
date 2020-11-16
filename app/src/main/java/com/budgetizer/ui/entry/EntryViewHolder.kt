@@ -19,33 +19,50 @@ package com.budgetizer.ui.entry
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.budgetizer.R
-import com.budgetizer.core.entry.data.model.Entry
-import com.budgetizer.core.entry.data.model.EntryType
+import com.budgetizer.core.data.entry.model.Entry
+import com.budgetizer.core.data.entry.model.EntryType
 import com.budgetizer.core.util.toFixed
 import com.budgetizer.databinding.ItemEntryBinding
 
 class EntryViewHolder constructor(
-    private val binding: ItemEntryBinding
+    private val binding: ItemEntryBinding,
+    private val onItemCLick: (entry: Entry) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     private var entry: Entry? = null
 
-    fun bind(entry: Entry) {
-        this.entry = entry
-        if (entry.type == EntryType.INCOME) {
-            binding.trend.apply {
-                rotation = binding.trend.rotation * 1
-                imageTintList = ContextCompat.getColorStateList(context, R.color.green)
-                binding.amount.setTextColor(ContextCompat.getColor(context, R.color.green))
+    fun bind(entryItem: EntryItem) {
+        this.entry = entryItem.entry
+        with(binding.itemEntry) {
+            if (entry?.type == EntryType.INCOME) {
+                trend.apply {
+                    setImageDrawable(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.ic_baseline_trending_up_24
+                        )
+                    )
+                    imageTintList = ContextCompat.getColorStateList(context, R.color.green)
+                    amount.setTextColor(ContextCompat.getColor(context, R.color.green))
+                }
+            } else {
+                trend.apply {
+                    setImageDrawable(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.ic_baseline_trending_down_24
+                        )
+                    )
+                    imageTintList = ContextCompat.getColorStateList(context, R.color.red)
+                    amount.setTextColor(ContextCompat.getColor(context, R.color.red))
+                }
             }
-        } else {
-            binding.trend.apply {
-                rotation = binding.trend.rotation * -1
-                imageTintList = ContextCompat.getColorStateList(context, R.color.red)
-                binding.amount.setTextColor(ContextCompat.getColor(context, R.color.red))
-            }
+            name.text = entry?.label
+            amount.text = entry?.amount?.toFixed()
+            date.text = entry?.createdAt?.toFixed()
         }
-        binding.entryType.text = entry.type.name
-        binding.name.text = entry.label
-        binding.amount.text = entry.amount.toFixed()
+
+        binding.itemEntry.root.setOnClickListener {
+            onItemCLick.invoke(entryItem.entry)
+        }
     }
 }

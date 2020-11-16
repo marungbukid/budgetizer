@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="entry_types">
+        <item>Income</item>
+        <item>Expense</item>
+    </string-array>
+
+    <string-array name="entry_ranges">
+        <item>Today</item>
+        <item>Weekly</item>
+        <item>Every half of the month</item>
+        <item>Monthly</item>
+    </string-array>
+</resources>

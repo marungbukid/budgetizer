@@ -2,9 +2,10 @@
     <string name="app_name">Budgetizer</string>
     <string name="title_onboarding">Onboarding</string>
 
-    <string name="label_home_header">Your daily budget:</string>
+    <string name="label_home_header">Remaining budget:</string>
     <string name="title_challenge">Challenge</string>
 
+    <string name="menu_select_date">Select Date</string>
     <string name="menu_add_expense">Add Expense</string>
     <string name="menu_profile">Profile</string>
 

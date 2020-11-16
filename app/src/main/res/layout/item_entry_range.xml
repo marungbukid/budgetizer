@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/range"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_medium"
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:paddingStart="@dimen/spacing_extra_large"
+    android:paddingEnd="@dimen/spacing_extra_large"
+    android:textSize="@dimen/text_size_large"
+    android:text="Daily"
+    android:textColor="@color/text_primary_dark" />

@@ -25,6 +25,7 @@ import com.budgetizer.core.data.Result
 import com.budgetizer.core.entry.data.EntryRepository
 import com.budgetizer.core.profile.data.ProfileRepository
 import com.budgetizer.core.profile.data.model.Profile
+import java.util.Date
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -43,8 +44,21 @@ class HomeViewModel constructor(
 
     fun hasProfile() = profileRepository.hasProfile
 
-    fun getEntries() = viewModelScope.launch(dispatcherProvider.computation) {
-        val result = entryRepository.getEntries()
+    fun getMonthEntriesToDate(date: Date) = viewModelScope.launch(dispatcherProvider.computation) {
+        val result = entryRepository.getMonthEntriesToDate(date)
+
+        withContext(dispatcherProvider.main) {
+            when (result) {
+                is Result.Success ->
+                    emitUiEvents(HomeEvents.MonthEntriesUpdate(result.data))
+                is Result.Error -> {
+                }
+            }
+        }
+    }
+
+    fun getEntriesByDate(date: Date) = viewModelScope.launch(dispatcherProvider.computation) {
+        val result = entryRepository.getEntriesByDate(date)
 
         withContext(dispatcherProvider.main) {
             when (result) {

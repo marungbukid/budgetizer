@@ -10,7 +10,8 @@
     android:padding="?actionBarSize"
     android:paddingStart="@dimen/spacing_larger"
     android:paddingEnd="@dimen/spacing_larger"
-    android:theme="@style/Theme.Budgetizer.Overlay">
+    android:theme="@style/Theme.Budgetizer.Overlay"
+    app:layout_collapseMode="parallax">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/greeting"

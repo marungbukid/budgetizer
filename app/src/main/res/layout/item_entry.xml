@@ -1,76 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/expense_item_height"
+    android:layout_height="@dimen/entry_item_height"
     android:layout_marginStart="@dimen/spacing_normal"
-    android:layout_marginTop="@dimen/spacing_small"
     android:layout_marginEnd="@dimen/spacing_normal"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
-    app:cardUseCompatPadding="true">
+    android:background="?selectableItemBackground"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="3dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/spacing_small">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/trend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:rotation="-45"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24"
-            tools:tint="@color/green" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/entryType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:textAllCaps="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/trend"
-            app:layout_constraintBottom_toTopOf="@+id/name"
-            tools:text="INCOME"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_larger"
-            android:textColor="@color/text_primary_dark"
-            app:layout_constraintTop_toBottomOf="@+id/entryType"
-            app:layout_constraintStart_toStartOf="@+id/entryType"
-            app:layout_constraintBottom_toTopOf="@+id/date"
-            tools:text="Food yellow cab" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="November 10, 2020"
-            app:layout_constraintTop_toBottomOf="@+id/name"
-            app:layout_constraintStart_toStartOf="@+id/name"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:textSize="@dimen/text_size_largest"
-            android:textColor="@color/text_primary_dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="P 9,999.99" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        android:id="@+id/itemEntry"
+        layout="@layout/content_item_entry" />
 </androidx.cardview.widget.CardView>

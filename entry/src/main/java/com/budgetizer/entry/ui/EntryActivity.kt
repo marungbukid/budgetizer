@@ -20,11 +20,14 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
-import com.budgetizer.core.entry.data.model.Entry
-import com.budgetizer.core.entry.data.model.EntryType
-import com.budgetizer.entry.R
+import com.budgetizer.core.R
+import com.budgetizer.core.data.entry.model.Entry
+import com.budgetizer.core.data.entry.model.EntryRange
+import com.budgetizer.core.data.entry.model.EntryType
+import com.budgetizer.core.util.Activities
 import com.budgetizer.entry.dagger.inject
 import com.budgetizer.entry.databinding.ActivityEntryBinding
+import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
@@ -34,6 +37,8 @@ class EntryActivity : AppCompatActivity() {
     lateinit var viewModel: EntryViewModel
 
     private lateinit var binding: ActivityEntryBinding
+    private var entryToUpdate: Entry? = null
+    private var curDate = System.currentTimeMillis()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,22 +46,72 @@ class EntryActivity : AppCompatActivity() {
         setContentView(binding.root)
         inject(this)
 
+        initParcels()
         initBindingEvents()
         initTypes()
+        initEntryRanges()
+    }
+
+    private fun initParcels() {
+        if (intent.hasExtra(Activities.Entry.EXTRA_UPDATE_ENTRY)) {
+            entryToUpdate = intent.getParcelableExtra(Activities.Entry.EXTRA_UPDATE_ENTRY)
+        }
+
+        if (intent.hasExtra(Activities.Entry.EXTRA_DATE_ENTRY)) {
+            curDate =
+                intent.getLongExtra(Activities.Entry.EXTRA_DATE_ENTRY, System.currentTimeMillis())
+        }
     }
 
     private fun initBindingEvents() {
+        if (entryToUpdate != null) {
+            binding.greeting.setText(com.budgetizer.entry.R.string.update_entry_title)
+            binding.contentNewEntry.addEntry.setText(com.budgetizer.entry.R.string.update_entry)
+
+            binding.contentNewEntry.type.editText?.setText(resources.getStringArray(R.array.entry_types)[entryToUpdate?.type?.ordinal!!])
+            binding.contentNewEntry.amount.editText?.setText(entryToUpdate?.amount.toString())
+            binding.contentNewEntry.name.editText?.setText(entryToUpdate?.label)
+            binding.contentNewEntry.range.editText?.setText(resources.getStringArray(R.array.entry_ranges)[entryToUpdate?.entryRange?.ordinal!!])
+
+            // val entryTypeIndex = resources.getStringArray(R.array.entry_ranges).toList().indexOf(entryToUpdate?.type)
+            // binding.contentNewEntry.range.editText?.setText(enumValues<EntryType>()[entryTypeIndex].name)
+        }
+
         binding.contentNewEntry.addEntry.setOnClickListener {
             val entryType = binding.contentNewEntry.type.editText?.text.toString()
+            val entryRange = binding.contentNewEntry.range.editText?.text.toString()
+            val entryRangeIndex =
+                resources.getStringArray(R.array.entry_ranges).toList().indexOf(entryRange)
 
-            viewModel.addEntry(
-                Entry(
-                    type = EntryType.valueOf(entryType.toUpperCase(Locale.getDefault())),
-                    label = binding.contentNewEntry.name.editText?.text.toString(),
-                    amount = binding.contentNewEntry.amount.editText?.text.toString().toDouble(),
-                    tags = emptyList()
+            if (entryToUpdate != null) {
+                viewModel.updateEntry(
+                    entryToUpdate!!.copy(
+                        id = entryToUpdate!!.id,
+                        type = EntryType.valueOf(entryType.toUpperCase(Locale.getDefault())),
+                        label = binding.contentNewEntry.name.editText?.text.toString(),
+                        amount = binding.contentNewEntry.amount.editText?.text.toString()
+                            .toDouble(),
+                        tags = emptyList(),
+                        createdAt = entryToUpdate!!.createdAt,
+                        updatedAt = Date(),
+                        entryRange = enumValues<EntryRange>()[entryRangeIndex]
+                    )
                 )
-            )
+            } else {
+                viewModel.addEntry(
+                    Entry(
+                        type = EntryType.valueOf(entryType.toUpperCase(Locale.getDefault())),
+                        label = binding.contentNewEntry.name.editText?.text.toString(),
+                        amount = binding.contentNewEntry.amount.editText?.text.toString()
+                            .toDouble(),
+                        tags = emptyList(),
+                        createdAt = Date(curDate),
+                        updatedAt = Date(),
+                        entryRange = enumValues<EntryRange>()[entryRangeIndex]
+                    )
+                )
+            }
+
 
             finish()
         }
@@ -66,5 +121,11 @@ class EntryActivity : AppCompatActivity() {
         val types = resources.getStringArray(R.array.entry_types).toList()
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, types)
         (binding.contentNewEntry.type.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+    }
+
+    private fun initEntryRanges() {
+        val ranges = resources.getStringArray(R.array.entry_ranges).toList()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ranges)
+        (binding.contentNewEntry.range.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 }

@@ -18,6 +18,8 @@ package com.budgetizer.core.dagger.entry
 
 import androidx.fragment.app.FragmentActivity
 import com.budgetizer.core.dagger.scope.FeatureScope
+import com.budgetizer.core.data.entry.EntryDao
+import com.budgetizer.core.data.entry.EntryDatabase
 import com.budgetizer.core.entry.data.EntryLocalDataSource
 import com.budgetizer.core.entry.data.EntryRepository
 import dagger.Module

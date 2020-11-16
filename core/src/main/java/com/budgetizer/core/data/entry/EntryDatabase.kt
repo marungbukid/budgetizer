@@ -14,19 +14,26 @@
  * limitations under the License.
  */
 
-package com.budgetizer.core.dagger.entry
+package com.budgetizer.core.data.entry
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.budgetizer.core.data.EntryTypeConverter
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.budgetizer.core.data.DateConverter
+import com.budgetizer.core.data.EntryFieldsConverters
 import com.budgetizer.core.data.StringListConverter
-import com.budgetizer.core.entry.data.model.Entry
+import com.budgetizer.core.data.entry.model.Entry
 
-@Database(entities = [Entry::class], version = 1, exportSchema = false)
-@TypeConverters(EntryTypeConverter::class, StringListConverter::class)
+@Database(entities = [Entry::class], version = 2)
+@TypeConverters(
+    EntryFieldsConverters::class,
+    StringListConverter::class,
+    DateConverter::class,
+)
 abstract class EntryDatabase : RoomDatabase() {
 
     abstract fun entryDao(): EntryDao
@@ -34,6 +41,12 @@ abstract class EntryDatabase : RoomDatabase() {
     companion object {
 
         private const val DATABASE_NAME = "budgetizer-db"
+
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE entry ADD COLUMN entry_range INTEGER NOT NULL DEFAULT 1")
+            }
+        }
 
         // For Singleton instantiation
         @Volatile
@@ -49,7 +62,9 @@ abstract class EntryDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context, EntryDatabase::class.java,
                 DATABASE_NAME
-            ).build()
+            )
+                .addMigrations(MIGRATION_1_2)
+                .build()
         }
     }
 }

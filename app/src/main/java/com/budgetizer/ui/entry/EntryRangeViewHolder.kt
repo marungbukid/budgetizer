@@ -14,9 +14,20 @@
  * limitations under the License.
  */
 
-package com.budgetizer.core.entry.data.model
+package com.budgetizer.ui.entry
 
-enum class EntryType {
-    INCOME,
-    EXPENSE
+import androidx.recyclerview.widget.RecyclerView
+import com.budgetizer.R
+import com.budgetizer.core.data.entry.model.EntryRange
+import com.budgetizer.databinding.ItemEntryRangeBinding
+
+class EntryRangeViewHolder(
+    private val binding: ItemEntryRangeBinding
+) : RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(entryRangeItem: EntryRangeItem) {
+        binding.range.text = binding.root.context.resources.getStringArray(R.array.entry_ranges)[EntryRange.valueOf(
+            entryRangeItem.range.name
+        ).ordinal]
+    }
 }

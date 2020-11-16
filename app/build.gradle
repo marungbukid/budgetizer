@@ -69,6 +69,9 @@ dependencies {
     implementation "androidx.room:room-ktx:${versions.room}"
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
+    implementation "com.github.marungbukid:simple-charts:${versions.simpleCharts}"
 
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
     kapt "androidx.room:room-compiler:${versions.room}"

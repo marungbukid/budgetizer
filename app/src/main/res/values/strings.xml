@@ -9,6 +9,9 @@
     <string name="menu_add_expense">Add Expense</string>
     <string name="menu_profile">Profile</string>
 
+    <string name="menu_entries">Entries</string>
+    <string name="menu_chart">Stats</string>
+
     <string name="no_items">No items present, you can add entries by pressing this or the button above (<annotation src="@drawable/ic_baseline_add_circle_outline_24">&#2228;</annotation>)</string>
     <string name="title_profile">Profile</string>
     <string name="title_entry">Entry</string>

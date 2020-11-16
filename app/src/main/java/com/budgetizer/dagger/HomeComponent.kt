@@ -21,6 +21,7 @@ import com.budgetizer.core.dagger.SharedPreferencesModule
 import com.budgetizer.core.dagger.entry.EntryDataModule
 import com.budgetizer.core.dagger.scope.FeatureScope
 import com.budgetizer.ui.HomeActivity
+import com.budgetizer.ui.entry.EntriesFragment
 import dagger.Component
 
 @Component(
@@ -39,4 +40,5 @@ interface HomeComponent {
     }
 
     fun inject(into: HomeActivity)
+    fun inject(into: EntriesFragment)
 }

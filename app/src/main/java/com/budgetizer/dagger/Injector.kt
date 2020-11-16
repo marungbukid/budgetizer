@@ -21,6 +21,7 @@ import com.budgetizer.core.dagger.entry.EntryDataModule
 import com.budgetizer.core.profile.data.ProfileLocalDataSource
 import com.budgetizer.ui.HomeActivity
 import com.budgetizer.ui.coreComponent
+import com.budgetizer.ui.entry.EntriesFragment
 
 fun inject(into: HomeActivity) {
     DaggerHomeComponent.builder()
@@ -30,6 +31,21 @@ fun inject(into: HomeActivity) {
         .sharedPreferencesModule(
             SharedPreferencesModule(
                 into,
+                ProfileLocalDataSource.PROFILE_PREFS
+            )
+        )
+        .build()
+        .inject(into)
+}
+
+fun inject(into: EntriesFragment) {
+    DaggerHomeComponent.builder()
+        .coreComponent(into.requireActivity().coreComponent())
+        .homeModule(HomeModule(into.requireActivity()))
+        .entryDataModule(EntryDataModule(into.requireActivity()))
+        .sharedPreferencesModule(
+            SharedPreferencesModule(
+                into.requireContext(),
                 ProfileLocalDataSource.PROFILE_PREFS
             )
         )

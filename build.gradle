@@ -25,7 +25,7 @@ buildscript { scriptHandler ->
             'room'             : '2.2.5',
             'ktlint'           : '0.36.0',
             'timber'           : '4.7.1',
-            'simpleCharts'     : '1.0.2'
+            'simpleCharts'     : '1.0.3'
     ]
     ext.names = [
             'applicationId': 'com.budgetizer'

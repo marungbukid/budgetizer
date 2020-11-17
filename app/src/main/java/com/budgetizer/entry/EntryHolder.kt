@@ -14,31 +14,12 @@
  * limitations under the License.
  */
 
-package com.budgetizer.core.data
+package com.budgetizer.entry
 
-import androidx.room.TypeConverter
+import com.budgetizer.core.data.entry.model.Entry
 import com.budgetizer.core.data.entry.model.EntryRange
-import com.budgetizer.core.data.entry.model.EntryType
 
-class EntryFieldsConverters {
-
-    @TypeConverter
-    fun entryTypeToInt(entryType: EntryType): Int {
-        return entryType.ordinal
-    }
-
-    @TypeConverter
-    fun intToEntryType(intEntryType: Int): EntryType {
-        return enumValues<EntryType>()[intEntryType]
-    }
-
-    @TypeConverter
-    fun entryRangeToInt(entryRange: EntryRange): Int {
-        return entryRange.ordinal
-    }
-
-    @TypeConverter
-    fun intToEntryRange(intEntryRange: Int): EntryRange {
-        return enumValues<EntryRange>()[intEntryRange]
-    }
-}
+data class EntryHolder(
+    val range: EntryRange,
+    val items: List<Entry>
+)

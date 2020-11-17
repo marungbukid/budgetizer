@@ -24,9 +24,7 @@
             android:layout_marginStart="@dimen/spacing_small"
             android:textSize="@dimen/text_size_largest"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            android:text="@string/new_entry_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/new_entry_title" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <include

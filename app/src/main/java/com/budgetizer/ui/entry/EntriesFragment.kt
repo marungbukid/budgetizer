@@ -1,6 +1,21 @@
+/*
+ * Copyright 2020 Jan Maru De Guzman.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.budgetizer.ui.entry
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Annotation
 import android.text.Spannable
@@ -21,10 +36,12 @@ import com.budgetizer.R
 import com.budgetizer.core.data.entry.model.Entry
 import com.budgetizer.core.data.entry.model.EntryType
 import com.budgetizer.core.util.Activities
+import com.budgetizer.core.util.getResId
 import com.budgetizer.core.util.intentTo
 import com.budgetizer.core.util.toFixed
 import com.budgetizer.dagger.inject
 import com.budgetizer.databinding.FragmentEntriesBinding
+import com.budgetizer.entry.EntriesManager
 import com.budgetizer.ui.HomeActivity
 import com.budgetizer.ui.HomeEvents
 import com.budgetizer.ui.HomeViewModel
@@ -170,7 +187,7 @@ class EntriesFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        binding.toolbar.inflateMenu(R.menu.home_menu)
+        binding.toolbar.inflateMenu(R.menu.entry_menu)
         binding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             binding.collapsingToolbar.title =
                 if (abs(verticalOffset) != binding.appbar.totalScrollRange)
@@ -235,8 +252,4 @@ class EntriesFragment : Fragment() {
             it.show(childFragmentManager, "picker")
         }
     }
-}
-
-fun Annotation.getResId(context: Context): Int {
-    return context.resources.getIdentifier(value, null, context.packageName)
 }

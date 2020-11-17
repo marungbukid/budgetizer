@@ -22,6 +22,7 @@ import com.budgetizer.core.dagger.entry.EntryDataModule
 import com.budgetizer.core.dagger.scope.FeatureScope
 import com.budgetizer.ui.HomeActivity
 import com.budgetizer.ui.entry.EntriesFragment
+import com.budgetizer.ui.stats.StatsFragment
 import dagger.Component
 
 @Component(
@@ -41,4 +42,5 @@ interface HomeComponent {
 
     fun inject(into: HomeActivity)
     fun inject(into: EntriesFragment)
+    fun inject(into: StatsFragment)
 }

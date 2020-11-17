@@ -13,6 +13,7 @@
     <string name="menu_chart">Stats</string>
 
     <string name="no_items">No items present, you can add entries by pressing this or the button above (<annotation src="@drawable/ic_baseline_add_circle_outline_24">&#2228;</annotation>)</string>
+    <string name="no_stat_items">No items present, select another date by clicking (<annotation src="@drawable/ic_baseline_calendar_today_24">&#2228;</annotation>)</string>
     <string name="title_profile">Profile</string>
     <string name="title_entry">Entry</string>
 </resources>

@@ -28,18 +28,23 @@ import com.budgetizer.core.data.EntryFieldsConverters
 import com.budgetizer.core.data.StringListConverter
 import com.budgetizer.core.data.entry.model.Entry
 
-@Database(entities = [Entry::class], version = 2)
+@Database(
+    entities = [
+        Entry::class
+    ],
+    version = 2,
+    exportSchema = true
+)
 @TypeConverters(
     EntryFieldsConverters::class,
     StringListConverter::class,
-    DateConverter::class,
+    DateConverter::class
 )
 abstract class EntryDatabase : RoomDatabase() {
 
     abstract fun entryDao(): EntryDao
 
     companion object {
-
         private const val DATABASE_NAME = "budgetizer-db"
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -50,17 +55,20 @@ abstract class EntryDatabase : RoomDatabase() {
 
         // For Singleton instantiation
         @Volatile
-        private var instance: EntryDatabase? = null
+        private var INSTANCE: EntryDatabase? = null
 
         fun getInstance(context: Context): EntryDatabase {
-            return instance ?: synchronized(this) {
-                instance ?: buildDatabase(context).also { instance = it }
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: buildDatabase(
+                    context
+                ).also { INSTANCE = it }
             }
         }
 
         private fun buildDatabase(context: Context): EntryDatabase {
             return Room.databaseBuilder(
-                context, EntryDatabase::class.java,
+                context,
+                EntryDatabase::class.java,
                 DATABASE_NAME
             )
                 .addMigrations(MIGRATION_1_2)

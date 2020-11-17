@@ -16,11 +16,9 @@
 
 package com.budgetizer.core.util
 
-import java.util.Date
+import android.content.Context
+import android.text.Annotation
 
-fun Date.toFixed(pattern: String? = null): String {
-    return DateFormat.format(this)
-}
-fun Date.toFixedMonthOnly(): String {
-    return DateFormat.formatMonthOnly(this)
+fun Annotation.getResId(context: Context): Int {
+    return context.resources.getIdentifier(value, null, context.packageName)
 }

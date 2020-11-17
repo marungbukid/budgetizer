@@ -19,8 +19,8 @@ package com.budgetizer.entry.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.budgetizer.core.data.CoroutinesDispatcherProvider
-import com.budgetizer.core.entry.data.EntryRepository
 import com.budgetizer.core.data.entry.model.Entry
+import com.budgetizer.core.entry.data.EntryRepository
 import kotlinx.coroutines.launch
 
 class EntryViewModel constructor(

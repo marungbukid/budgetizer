@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package com.budgetizer.ui.entry
+package com.budgetizer.entry
 
 import com.budgetizer.core.data.entry.model.Entry
 import com.budgetizer.core.data.entry.model.EntryRange
+import com.budgetizer.ui.entry.EntryItem
+import com.budgetizer.ui.entry.EntryListItem
+import com.budgetizer.ui.entry.EntryRangeItem
 
 class EntriesManager(entries: List<Entry>) {
 
@@ -61,5 +64,26 @@ class EntriesManager(entries: List<Entry>) {
 
     fun getEntries(): List<EntryListItem> {
         return entryItems
+    }
+
+    fun getMonthlyEntries(): List<EntryHolder> {
+        return listOf(
+            EntryHolder(
+                range = EntryRange.TODAY,
+                items = daily
+            ),
+            EntryHolder(
+                range = EntryRange.WEEKLY,
+                items = weekly
+            ),
+            EntryHolder(
+                range = EntryRange.HALF_MONTH,
+                items = halfMonth
+            ),
+            EntryHolder(
+                range = EntryRange.MONTHLY,
+                items = monthly
+            )
+        )
     }
 }

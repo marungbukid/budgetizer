@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
-package com.budgetizer.core.util
+package com.budgetizer.ui.stats
 
-import java.util.Date
+import com.marungbukid.charts.line.LineChartEntry
 
-fun Date.toFixed(pattern: String? = null): String {
-    return DateFormat.format(this)
-}
-fun Date.toFixedMonthOnly(): String {
-    return DateFormat.formatMonthOnly(this)
+data class StatsChartEntry(
+    val index: Long,
+    val value: Double,
+    val timestamp: Long,
+    val label: String
+) : LineChartEntry() {
+    override fun getIndex(): Int {
+        return index.toInt()
+    }
+
+    override fun getValue(): Float {
+        return value.toFloat()
+    }
+
+    override fun getDateTime(): Long {
+        return timestamp
+    }
 }

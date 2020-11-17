@@ -20,8 +20,8 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 import java.util.Date
+import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "entry")
@@ -49,7 +49,7 @@ data class Entry(
     val createdAt: Date,
 
     @ColumnInfo(name = "updated_at")
-    val updatedAt: Date,
+    val updatedAt: Date
 ) : Parcelable {
 
     fun calculatedAmount(): Double {

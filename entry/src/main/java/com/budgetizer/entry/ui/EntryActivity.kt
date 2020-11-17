@@ -112,7 +112,6 @@ class EntryActivity : AppCompatActivity() {
                 )
             }
 
-
             finish()
         }
     }

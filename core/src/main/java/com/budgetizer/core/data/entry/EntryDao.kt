@@ -22,7 +22,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.budgetizer.core.data.entry.model.Entry
-import java.util.Date
 
 @Dao
 interface EntryDao {

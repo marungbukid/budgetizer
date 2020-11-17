@@ -16,13 +16,13 @@
 
 package com.budgetizer.core.entry.data
 
-import com.budgetizer.core.data.entry.EntryDao
 import com.budgetizer.core.data.CoroutinesDispatcherProvider
 import com.budgetizer.core.data.Result
+import com.budgetizer.core.data.entry.EntryDao
 import com.budgetizer.core.data.entry.model.Entry
+import java.util.Date
 import javax.inject.Inject
 import kotlinx.coroutines.withContext
-import java.util.Date
 
 class EntryLocalDataSource @Inject constructor(
     private val entryDao: EntryDao,

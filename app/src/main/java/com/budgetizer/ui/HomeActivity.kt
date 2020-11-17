@@ -39,7 +39,6 @@ class HomeActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigation.setupWithNavController(navController)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

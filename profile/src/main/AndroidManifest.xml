@@ -11,4 +11,24 @@
         </dist:delivery>
         <dist:fusing dist:include="true" />
     </dist:module>
+
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:extractNativeLibs="false"
+        android:theme="@style/Theme.Budgetizer"
+        android:name="com.budgetizer.ui.BudgetizerApplication">
+        <activity
+            android:name="com.budgetizer.profile.ui.ProfileActivity"
+            android:parentActivityName="com.budgetizer.ui.HomeActivity"
+            android:theme="@style/Theme.Budgetizer.Profile">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>

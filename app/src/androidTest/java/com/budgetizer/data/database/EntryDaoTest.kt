@@ -21,8 +21,12 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.budgetizer.core.data.Entry
-import com.budgetizer.core.data.EntryType
+import com.budgetizer.core.data.entry.EntryDao
+import com.budgetizer.core.data.entry.EntryDatabase
+import com.budgetizer.core.data.entry.model.Entry
+import com.budgetizer.core.data.entry.model.EntryRange
+import com.budgetizer.core.data.entry.model.EntryType
+import java.util.Date
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
@@ -42,33 +46,6 @@ class EntryDaoTest {
 
     private lateinit var entryDb: EntryDatabase
     private lateinit var entryDao: EntryDao
-
-    private val entries = arrayListOf(
-        Entry(
-            id = 1,
-            type = EntryType.EXPENSE,
-            label = "Food",
-            tag = "food"
-        ),
-        Entry(
-            id = 2,
-            type = EntryType.EXPENSE,
-            label = "Clothing",
-            tag = "util"
-        ),
-        Entry(
-            id = 3,
-            type = EntryType.EXPENSE,
-            label = "Something",
-            tag = "util"
-        ),
-        Entry(
-            id = 4,
-            type = EntryType.EXPENSE,
-            label = "Test",
-            tag = "test"
-        )
-    )
 
     @Before
     fun setup() {
@@ -94,10 +71,13 @@ class EntryDaoTest {
             id = 5,
             type = EntryType.INCOME,
             label = "Food",
-            tag = "food"
+            tags = listOf("sup"),
+            amount = 0.0,
+            createdAt = Date(),
+            updatedAt = Date(),
+            entryRange = EntryRange.HALF_MONTH
         )
 
-        entries.forEach { entryDao.insertEntry(it) }
         entryDao.insertEntry(entry)
 
         val getEntry = entryDao.getEntry(entry.id)
@@ -110,5 +90,29 @@ class EntryDaoTest {
         val getEntry = entryDao.getEntry(10)
 
         Assert.assertNull("Entry is not found", getEntry)
+    }
+
+    @Test
+    fun verify_timestamp() = runBlockingTest {
+        val entry = Entry(
+            id = 1,
+            type = EntryType.INCOME,
+            label = "Food",
+            tags = listOf("sup"),
+            amount = 0.0,
+            createdAt = Date(),
+            updatedAt = Date(),
+            entryRange = EntryRange.HALF_MONTH
+        )
+
+        entryDao.insertEntry(entry)
+
+        val getEntry = entryDao.getEntry(entry.id)
+
+        Assert.assertEquals(
+            "Entry timestamp result:",
+            getEntry.createdAt.time / 1000,
+            Date().time / 1000
+        )
     }
 }

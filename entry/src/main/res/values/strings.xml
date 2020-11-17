@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="new_entry_title">New entry</string>
+    <string name="update_entry_title">Update entry</string>
+
+    <string name="update_entry">Update</string>
+</resources>

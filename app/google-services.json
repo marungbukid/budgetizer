@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1026282178654",
+    "firebase_url": "https://budgetizer-84e8b.firebaseio.com",
+    "project_id": "budgetizer-84e8b",
+    "storage_bucket": "budgetizer-84e8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026282178654:android:ae2a03b0d5141c1e9d4ccf",
+        "android_client_info": {
+          "package_name": "com.budgetizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026282178654-9e56eqtdndv092mso3t2hkkid2ja3r01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4IGnrb63_FJkSMxKEO5g20Bj4EyYkK8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026282178654-9e56eqtdndv092mso3t2hkkid2ja3r01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,22 +3,29 @@ buildscript { scriptHandler ->
     apply from: 'repositories.gradle',
             to: scriptHandler
     ext.versions = [
-            'compileSdk'      : 30,
-            'minSdk'          : 21,
-            'targetSdk'       : 30,
-            'appCompat'       : '1.2.0',
-            'constraintLayout': '2.0.4',
-            'coreKtx'         : '1.3.2',
-            'coreTesting'     : '2.1.0',
-            'coroutines'      : '1.3.9',
-            'dagger'          : '2.23.2',
-            'kotlin'          : '1.4.10',
-            'material'        : '1.2.1',
-            'junit'           : '4.13.1',
-            'extJunit'        : '1.1.2',
-            'espresso'        : '3.3.0',
-            'room'            : '2.2.5',
-            'ktlint'          : '0.36.0',
+            'compileSdk'       : 30,
+            'minSdk'           : 21,
+            'targetSdk'        : 30,
+            'appCompat'        : '1.2.0',
+            'constraintLayout' : '2.0.4',
+            'coreKtx'          : '1.3.2',
+            'coreTesting'      : '2.1.0',
+            'coroutines'       : '1.3.9',
+            'crashlyticsGradle': '2.4.1',
+            'dagger'           : '2.23.2',
+            'firebase'         : '26.1.0',
+            'kotlin'           : '1.4.10',
+            'material'         : '1.2.1',
+            'navigation'       : '2.3.1',
+            'googleServices'   : '4.3.4',
+            'junit'            : '4.13.1',
+            'extJunit'         : '1.1.2',
+            'espresso'         : '3.3.0',
+            'lifecycle'        : '2.2.0',
+            'room'             : '2.2.5',
+            'ktlint'           : '0.36.0',
+            'timber'           : '4.7.1',
+            'simpleCharts'     : '1.0.3'
     ]
     ext.names = [
             'applicationId': 'com.budgetizer'
@@ -26,11 +33,19 @@ buildscript { scriptHandler ->
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "com.google.gms:google-services:${versions.googleServices}"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:${versions.crashlyticsGradle}"
     }
 }
 
 plugins {
     id 'com.diffplug.spotless' version '5.8.1'
+}
+
+ext {
+    // query git for the commit count to automate versioning.
+    gitCommitCount = 1 +
+            Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
 }
 
 subprojects {

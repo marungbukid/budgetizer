@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <dimen name="appbar_height">256dp</dimen>
-    <dimen name="expense_item_height">128dp</dimen>
+    <dimen name="entry_item_height">68dp</dimen>
 </resources>

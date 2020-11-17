@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:gravity="center"
+        android:fitsSystemWindows="true"
+        android:padding="@dimen/spacing_largest"
+        android:theme="@style/Theme.Budgetizer.Overlay">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:textSize="@dimen/text_size_largest"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            android:text="@string/new_entry_title" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        android:id="@+id/content_new_entry"
+        layout="@layout/content_new_entry" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

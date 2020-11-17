@@ -38,13 +38,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     packagingOptions {
         exclude "META-INF/AL2.0"
         exclude "META-INF/LGPL2.1"
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 
 dependencies {
     implementation project(":app")
+    implementation project(":core")
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 }

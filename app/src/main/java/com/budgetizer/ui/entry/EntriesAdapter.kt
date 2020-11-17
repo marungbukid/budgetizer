@@ -17,29 +17,81 @@
 package com.budgetizer.ui.entry
 
 import android.app.Activity
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.budgetizer.core.data.Entry
+import com.budgetizer.core.util.Activities
+import com.budgetizer.core.util.intentTo
+import com.budgetizer.databinding.ItemEntryBinding
+import com.budgetizer.databinding.ItemEntryRangeBinding
 
 class EntriesAdapter(
     private val host: Activity
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val layoutInflater = LayoutInflater.from(host)
 
-    var items = emptyList<Entry>()
+    var items = emptyList<EntryListItem>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
+    init {
+        setHasStableIds(true)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+        return if (viewType == VIEW_TYPE_RANGE) {
+            createEntryRangeViewHolder(parent)
+        } else {
+            createEntryViewHolder(parent)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        when (holder.itemViewType) {
+            VIEW_TYPE_RANGE -> {
+                (holder as EntryRangeViewHolder)
+                    .bind(items[position] as EntryRangeItem)
+            }
+            VIEW_TYPE_ENTRY -> {
+                (holder as EntryViewHolder)
+                    .bind(items[position] as EntryItem)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return items.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return items[position].hashCode().toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return items[position].type()
+    }
+
+    private fun createEntryViewHolder(
+        parent: ViewGroup
+    ): EntryViewHolder {
+        return EntryViewHolder(ItemEntryBinding.inflate(layoutInflater, parent, false)) {
+            val intent = intentTo(Activities.Entry)
+            intent.putExtra(Activities.Entry.EXTRA_UPDATE_ENTRY, it)
+
+            host.startActivity(intent)
+        }
+    }
+
+    private fun createEntryRangeViewHolder(
+        parent: ViewGroup
+    ): EntryRangeViewHolder {
+        return EntryRangeViewHolder(ItemEntryRangeBinding.inflate(layoutInflater, parent, false))
+    }
+
+    companion object {
+        const val VIEW_TYPE_ENTRY = 0
+        const val VIEW_TYPE_RANGE = 1
     }
 }

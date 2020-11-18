@@ -1,15 +1,24 @@
 package com.budgetizer.challenge.ui.fiftytwo
 
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.media.RingtoneManager
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import com.budgetizer.challenge.dagger.inject
 import com.budgetizer.challenge.databinding.FragmentFiftytwoWeekBinding
 import com.budgetizer.challenge.ui.ChallengeActivity
 import com.budgetizer.challenge.ui.FragmentsEvents
 import com.budgetizer.challenge.ui.FragmentsViewModel
+import com.budgetizer.challenge.ui.NotificationPublisher
 import com.budgetizer.core.challenge.data.ChallengeLocalDataSource
 import com.budgetizer.core.data.entry.model.Entry
 import com.budgetizer.core.data.entry.model.EntryRange
@@ -138,13 +147,48 @@ class FiftyTwoWeekFragment : Fragment() {
                     updatedAt = calendar.time
                 )
             )
-
             calendar.add(Calendar.WEEK_OF_MONTH, 1)
+            scheduleNotification(requireContext(), calendar.timeInMillis, 1)
             incrementsValue += increments
         }
 
         viewModel.addAllEntries(entries)
         fetchEntries()
+    }
+
+    private fun scheduleNotification(
+        context: Context,
+        delay: Long,
+        notificationId: Int
+    ) { //delay is after how much time(in millis) from current time you want to schedule the notification
+        val builder =
+            NotificationCompat.Builder(requireContext(), NotificationPublisher.NOTIFICATION_ID)
+                .setContentTitle(TITLE)
+                .setContentText("Sample")
+                .setAutoCancel(true)
+                .setSmallIcon(com.budgetizer.R.mipmap.ic_launcher)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+        val intent = Intent(context, ChallengeActivity::class.java)
+        val activity = PendingIntent.getActivity(
+            context,
+            notificationId,
+            intent,
+            PendingIntent.FLAG_CANCEL_CURRENT
+        )
+        builder.setContentIntent(activity)
+        val notification: Notification = builder.build()
+        val notificationIntent = Intent(context, NotificationPublisher::class.java)
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId)
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            notificationId,
+            notificationIntent,
+            PendingIntent.FLAG_CANCEL_CURRENT
+        )
+        val futureInMillis: Long = SystemClock.elapsedRealtime() + delay
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager[AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis] = pendingIntent
     }
 
     companion object {

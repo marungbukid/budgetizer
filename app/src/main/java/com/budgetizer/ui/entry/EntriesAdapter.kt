@@ -20,10 +20,13 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.budgetizer.R
+import com.budgetizer.core.data.entry.model.EntryRange
 import com.budgetizer.core.util.Activities
 import com.budgetizer.core.util.intentTo
 import com.budgetizer.databinding.ItemEntryBinding
-import com.budgetizer.databinding.ItemEntryRangeBinding
+import com.budgetizer.databinding.ItemHeaderBinding
+import com.budgetizer.ui.view.ItemHeaderViewHolder
 
 class EntriesAdapter(
     private val host: Activity
@@ -51,8 +54,14 @@ class EntriesAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             VIEW_TYPE_RANGE -> {
-                (holder as EntryRangeViewHolder)
-                    .bind(items[position] as EntryRangeItem)
+                val range = items[position] as EntryRangeItem
+                val rangeValue =
+                    host.resources.getStringArray(R.array.entry_ranges)[EntryRange.valueOf(
+                        range.range.name
+                    ).ordinal]
+
+                (holder as ItemHeaderViewHolder)
+                    .bind(rangeValue)
             }
             VIEW_TYPE_ENTRY -> {
                 (holder as EntryViewHolder)
@@ -86,8 +95,8 @@ class EntriesAdapter(
 
     private fun createEntryRangeViewHolder(
         parent: ViewGroup
-    ): EntryRangeViewHolder {
-        return EntryRangeViewHolder(ItemEntryRangeBinding.inflate(layoutInflater, parent, false))
+    ): ItemHeaderViewHolder {
+        return ItemHeaderViewHolder(ItemHeaderBinding.inflate(layoutInflater, parent, false))
     }
 
     companion object {

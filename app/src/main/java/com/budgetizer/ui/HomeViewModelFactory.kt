@@ -18,6 +18,7 @@ package com.budgetizer.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.budgetizer.core.challenge.data.ChallengeRepository
 import com.budgetizer.core.data.CoroutinesDispatcherProvider
 import com.budgetizer.core.entry.data.EntryRepository
 import com.budgetizer.core.profile.data.ProfileRepository
@@ -27,6 +28,7 @@ import javax.inject.Inject
 class HomeViewModelFactory @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val entryRepository: EntryRepository,
+    private val challengeRepository: ChallengeRepository,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -36,6 +38,7 @@ class HomeViewModelFactory @Inject constructor(
         return HomeViewModel(
             profileRepository = profileRepository,
             entryRepository = entryRepository,
+            challengeRepository = challengeRepository,
             dispatcherProvider = dispatcherProvider
         ) as T
     }

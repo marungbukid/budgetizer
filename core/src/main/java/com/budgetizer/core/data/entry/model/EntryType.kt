@@ -18,5 +18,6 @@ package com.budgetizer.core.data.entry.model
 
 enum class EntryType {
     INCOME,
-    EXPENSE
+    EXPENSE,
+    SAVINGS
 }

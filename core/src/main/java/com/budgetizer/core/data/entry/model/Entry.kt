@@ -45,6 +45,9 @@ data class Entry(
     @ColumnInfo(name = "entry_range")
     var entryRange: EntryRange,
 
+    @ColumnInfo(name = "source")
+    var source: String = EntrySource.USER,
+
     @ColumnInfo(name = "created_at")
     val createdAt: Date,
 

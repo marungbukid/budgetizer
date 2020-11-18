@@ -8,13 +8,19 @@
     <fragment
         android:id="@+id/entriesFragment"
         android:name="com.budgetizer.ui.entry.EntriesFragment"
-        android:label="EntriesFragment"
+        android:label="Entries"
         tools:layout="@layout/fragment_entries" />
 
     <fragment
         android:id="@+id/statsFragment"
         android:name="com.budgetizer.ui.stats.StatsFragment"
-        android:label="EntriesFragment"
+        android:label="Stats"
+        tools:layout="@layout/fragment_stats" />
+
+    <fragment
+        android:id="@+id/challengeFragment"
+        android:name="com.budgetizer.ui.challenge.ChallengeFragment"
+        android:label="Challenge"
         tools:layout="@layout/fragment_entries" />
 
 </navigation>

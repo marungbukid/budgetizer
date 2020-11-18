@@ -19,6 +19,7 @@ package com.budgetizer.dagger
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.budgetizer.core.dagger.DataManagerModule
+import com.budgetizer.core.dagger.challenge.ChallengeDataModule
 import com.budgetizer.core.dagger.entry.EntryDataModule
 import com.budgetizer.ui.HomeViewModel
 import com.budgetizer.ui.HomeViewModelFactory
@@ -28,7 +29,8 @@ import dagger.Provides
 @Module(
     includes = [
         DataManagerModule::class,
-        EntryDataModule::class
+        EntryDataModule::class,
+        ChallengeDataModule::class
     ]
 )
 class HomeModule(private val activity: FragmentActivity) {

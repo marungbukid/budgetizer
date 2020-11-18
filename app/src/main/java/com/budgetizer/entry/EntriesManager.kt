@@ -18,13 +18,17 @@ package com.budgetizer.entry
 
 import com.budgetizer.core.data.entry.model.Entry
 import com.budgetizer.core.data.entry.model.EntryRange
+import com.budgetizer.core.util.isSameDay
+import com.budgetizer.core.util.isSameYear
 import com.budgetizer.ui.entry.EntryItem
 import com.budgetizer.ui.entry.EntryListItem
 import com.budgetizer.ui.entry.EntryRangeItem
+import java.util.Date
 
-class EntriesManager(entries: List<Entry>) {
+class EntriesManager(entries: List<Entry>, date: Date = Date()) {
 
-    private val daily: List<Entry> = entries.filter { it.entryRange == EntryRange.TODAY }
+    private val daily: List<Entry> =
+        entries.filter { it.entryRange == EntryRange.TODAY }
     private val weekly: List<Entry> = entries.filter { it.entryRange == EntryRange.WEEKLY }
     private val halfMonth: List<Entry> = entries.filter { it.entryRange == EntryRange.HALF_MONTH }
     private val monthly: List<Entry> = entries.filter { it.entryRange == EntryRange.MONTHLY }
@@ -32,34 +36,35 @@ class EntriesManager(entries: List<Entry>) {
     private val entryItems = ArrayList<EntryListItem>()
 
     init {
-        items.addAll(daily)
+        val tempDaily = daily.filter {
+            it.updatedAt.isSameDay(date)
+        }
+        items.addAll(tempDaily)
         items.addAll(weekly)
         items.addAll(halfMonth)
         items.addAll(monthly)
 
-        if (daily.isNotEmpty()) {
-            entryItems.add(EntryRangeItem(daily[0].entryRange))
-            entryItems.addAll(daily.map { EntryItem(it) })
+        if (tempDaily.isNotEmpty()) {
+            entryItems.add(EntryRangeItem(tempDaily[0].entryRange))
+            entryItems.addAll(tempDaily.map { EntryItem(it) })
         }
 
         if (weekly.isNotEmpty()) {
             entryItems.add(EntryRangeItem(weekly[0].entryRange))
-            entryItems.addAll(weekly.map { EntryItem(it) })
+            entryItems.addAll(weekly.filter { it.createdAt.isSameYear(date) }.map { EntryItem(it) })
         }
 
         if (halfMonth.isNotEmpty()) {
             entryItems.add(EntryRangeItem(halfMonth[0].entryRange))
-            entryItems.addAll(halfMonth.map { EntryItem(it) })
+            entryItems.addAll(halfMonth.filter { it.createdAt.isSameYear(date) }
+                .map { EntryItem(it) })
         }
 
         if (monthly.isNotEmpty()) {
             entryItems.add(EntryRangeItem(monthly[0].entryRange))
-            entryItems.addAll(monthly.map { EntryItem(it) })
+            entryItems.addAll(monthly.filter { it.createdAt.isSameYear(date) }
+                .map { EntryItem(it) })
         }
-    }
-
-    fun getRealEntries(): List<Entry> {
-        return items
     }
 
     fun getEntries(): List<EntryListItem> {

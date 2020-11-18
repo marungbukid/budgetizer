@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.budgetizer.core.data.entry
+package com.budgetizer.core.data
 
 import android.content.Context
 import androidx.room.Database
@@ -23,16 +23,17 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.budgetizer.core.data.DateConverter
-import com.budgetizer.core.data.EntryFieldsConverters
-import com.budgetizer.core.data.StringListConverter
+import com.budgetizer.core.data.challenge.ChallengeDao
+import com.budgetizer.core.data.challenge.model.Challenge
+import com.budgetizer.core.data.entry.EntryDao
 import com.budgetizer.core.data.entry.model.Entry
 
 @Database(
     entities = [
-        Entry::class
+        Entry::class,
+        Challenge::class
     ],
-    version = 2,
+    version = 5,
     exportSchema = true
 )
 @TypeConverters(
@@ -40,9 +41,10 @@ import com.budgetizer.core.data.entry.model.Entry
     StringListConverter::class,
     DateConverter::class
 )
-abstract class EntryDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun entryDao(): EntryDao
+    abstract fun challengeDao(): ChallengeDao
 
     companion object {
         private const val DATABASE_NAME = "budgetizer-db"
@@ -53,11 +55,29 @@ abstract class EntryDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS challenge (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, label TEXT NOT NULL, thumb_res INTEGER NOT NULL, is_active INTEGER NOT NULL, is_finished INTEGER NOT NULL)")
+            }
+        }
+
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE challenge ADD COLUMN nav_id INTEGER NOT NULL DEFAULT -1")
+            }
+        }
+
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE entry ADD COLUMN source TEXT NOT NULL DEFAULT 'USER'")
+            }
+        }
+
         // For Singleton instantiation
         @Volatile
-        private var INSTANCE: EntryDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): EntryDatabase {
+        fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: buildDatabase(
                     context
@@ -65,13 +85,18 @@ abstract class EntryDatabase : RoomDatabase() {
             }
         }
 
-        private fun buildDatabase(context: Context): EntryDatabase {
+        private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(
                 context,
-                EntryDatabase::class.java,
+                AppDatabase::class.java,
                 DATABASE_NAME
             )
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(
+                    MIGRATION_1_2,
+                    MIGRATION_2_3,
+                    MIGRATION_3_4,
+                    MIGRATION_4_5
+                )
                 .build()
         }
     }

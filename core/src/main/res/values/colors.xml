@@ -15,6 +15,8 @@
     <color name="red">#ffdd2c00</color>
     <color name="green">#4aa87a</color>
     <color name="orange">#ffff9800</color>
+    <color name="gray">#8e8e93</color>
+    <color name="gray_light">#a98e8e93</color>
 
     <color name="color_surface">@color/background_light</color>
     <color name="color_highlighted_surface">#ffffff</color>

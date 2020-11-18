@@ -38,6 +38,7 @@ import com.budgetizer.core.data.entry.model.EntryType
 import com.budgetizer.core.util.Activities
 import com.budgetizer.core.util.getResId
 import com.budgetizer.core.util.intentTo
+import com.budgetizer.core.util.isSameYear
 import com.budgetizer.core.util.toFixed
 import com.budgetizer.dagger.inject
 import com.budgetizer.databinding.FragmentEntriesBinding
@@ -103,6 +104,8 @@ class EntriesFragment : Fragment() {
         super.onCreate(savedInstanceState)
         inject(this)
 
+        entriesAdapter = EntriesAdapter(requireActivity())
+
         setHasOptionsMenu(true)
     }
 
@@ -112,19 +115,21 @@ class EntriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEntriesBinding.inflate(inflater, container, false)
+        initViewModelObservers()
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        initBindingResources()
+        checkEmptyState()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        entriesAdapter = EntriesAdapter(requireActivity())
 
         (requireActivity() as? HomeActivity)?.setSupportActionBar(binding.toolbar)
-
-        checkEmptyState()
-
-        initViewModelObservers()
-        initBindingResources()
     }
 
     override fun onDestroyView() {
@@ -172,11 +177,9 @@ class EntriesFragment : Fragment() {
             val events = _events ?: return@observe
 
             when (events) {
-                is HomeEvents.EntriesUpdate -> {
-                    updateEntries(events.entries)
-                }
                 is HomeEvents.MonthEntriesUpdate -> {
                     updateBudget(events.entries)
+                    updateEntries(events.entries)
                 }
             }
         })
@@ -197,11 +200,10 @@ class EntriesFragment : Fragment() {
 
     private fun fetchEntries() {
         viewModel.getMonthEntriesToDate(Date(curDate))
-        viewModel.getEntriesByDate(Date(curDate))
     }
 
     private fun updateEntries(items: List<Entry>) {
-        entriesManager = EntriesManager(items)
+        entriesManager = EntriesManager(items, Date(curDate))
         entriesAdapter.items = entriesManager.getEntries()
 
         checkEmptyState()
@@ -211,11 +213,11 @@ class EntriesFragment : Fragment() {
         viewModel.profile?.apply {
             val additional =
                 items
-                    .filter { it.type == EntryType.INCOME }
+                    .filter { it.type == EntryType.INCOME && it.createdAt.isSameYear(Date()) }
                     .sumByDouble { it.calculatedAmount() }
             val negation =
                 items
-                    .filter { it.type == EntryType.EXPENSE }
+                    .filter { it.type == EntryType.EXPENSE && it.createdAt.isSameYear(Date()) }
                     .sumByDouble { it.calculatedAmount() }
 
             val total = (grossMonthlyIncome + additional) - negation

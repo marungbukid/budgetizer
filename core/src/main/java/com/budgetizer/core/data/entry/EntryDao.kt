@@ -17,6 +17,7 @@
 package com.budgetizer.core.data.entry
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -32,6 +33,9 @@ interface EntryDao {
     @Query("SELECT * FROM entry WHERE strftime('%d-%m-%Y', datetime(created_at/1000, 'unixepoch')) = strftime('%d-%m-%Y', datetime(:date/1000, 'unixepoch'))")
     suspend fun getEntryByDate(date: Long): List<Entry>
 
+    @Query("SELECT * FROM entry WHERE source = :tag ORDER BY created_at ASC")
+    suspend fun getEntryByTag(tag: String): List<Entry>
+
     @Query("SELECT * FROM entry WHERE strftime('%m', datetime(created_at/1000, 'unixepoch')) = strftime('%m', datetime(:date/1000, 'unixepoch')) OR strftime('%m', datetime(updated_at/1000, 'unixepoch')) = strftime('%m', datetime(:date/1000, 'unixepoch'))")
     suspend fun getMonthEntriesToDate(date: Long): List<Entry>
 
@@ -42,5 +46,8 @@ interface EntryDao {
     suspend fun insertEntry(entry: Entry)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateEntry(entry: Entry)
+    suspend fun updateEntry(entry: Entry): Int
+
+    @Query("DELETE FROM entry WHERE source = :tag")
+    suspend fun deleteEntriesByTag(tag: String)
 }

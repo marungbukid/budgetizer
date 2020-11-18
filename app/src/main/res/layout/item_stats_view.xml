@@ -7,8 +7,8 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/item_entry_range"
-        layout="@layout/item_entry_range" />
+        android:id="@+id/item_header"
+        layout="@layout/item_header" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

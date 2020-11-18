@@ -39,7 +39,15 @@ interface AddressableActivity {
 object Activities {
 
     object Challenge : AddressableActivity {
+        const val EXTRA_CHALLENGE = "EXTRA_CHALLENGE"
+
         override val className = "$PACKAGE_NAME.challenge.ui.ChallengeActivity"
+
+        object OnBoard : AddressableActivity {
+            const val RC_ONBOARD = 1000
+
+            override val className = "$PACKAGE_NAME.challenge.ui.onboard.OnBoardActivity"
+        }
     }
 
     object Profile : AddressableActivity {

@@ -8,14 +8,16 @@
     <string-array name="entry_ranges">
         <item>Today</item>
         <item>Weekly</item>
-        <item>Every half of the month</item>
+        <item>Bi-monthly</item>
         <item>Monthly</item>
     </string-array>
 
     <string-array name="entry_stat_ranges">
         <item>Daily</item>
         <item>Weekly</item>
-        <item>Every half of the month</item>
+        <item>Bi-monthly</item>
         <item>Monthly</item>
     </string-array>
+
+    <string name="error_required_fields">This field is required</string>
 </resources>

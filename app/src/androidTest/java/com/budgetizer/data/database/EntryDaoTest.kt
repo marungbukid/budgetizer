@@ -22,7 +22,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.budgetizer.core.data.entry.EntryDao
-import com.budgetizer.core.data.entry.EntryDatabase
+import com.budgetizer.core.data.AppDatabase
 import com.budgetizer.core.data.entry.model.Entry
 import com.budgetizer.core.data.entry.model.EntryRange
 import com.budgetizer.core.data.entry.model.EntryType
@@ -44,14 +44,14 @@ class EntryDaoTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var entryDb: EntryDatabase
+    private lateinit var appDb: AppDatabase
     private lateinit var entryDao: EntryDao
 
     @Before
     fun setup() {
-        entryDb = Room.inMemoryDatabaseBuilder(
+        appDb = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
-            EntryDatabase::class.java
+            AppDatabase::class.java
         )
             .allowMainThreadQueries()
             .build()
@@ -62,7 +62,7 @@ class EntryDaoTest {
 
     @After
     fun teardown() {
-        entryDb.close()
+        appDb.close()
     }
 
     @Test

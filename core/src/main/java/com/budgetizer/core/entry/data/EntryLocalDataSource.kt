@@ -37,6 +37,14 @@ class EntryLocalDataSource @Inject constructor(
         }
     }
 
+    suspend fun getEntriesByTag(tag: String): Result<List<Entry>> = withContext(dispatcherProvider.io) {
+        return@withContext try {
+            Result.Success(entryDao.getEntryByTag(tag))
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
     suspend fun getMonthEntriesToDate(date: Date): Result<List<Entry>> = withContext(dispatcherProvider.io) {
         return@withContext try {
             Result.Success(entryDao.getMonthEntriesToDate(date.time))
@@ -49,7 +57,15 @@ class EntryLocalDataSource @Inject constructor(
         entryDao.insertEntry(entry)
     }
 
-    suspend fun updateEntry(entry: Entry) = withContext(dispatcherProvider.io) {
-        entryDao.updateEntry(entry)
+    suspend fun updateEntry(entry: Entry): Result<Int> = withContext(dispatcherProvider.io) {
+        return@withContext try {
+            Result.Success(entryDao.updateEntry(entry))
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    suspend fun deleteEntryByTag(tag: String) = withContext(dispatcherProvider.io) {
+        entryDao.deleteEntriesByTag(tag)
     }
 }

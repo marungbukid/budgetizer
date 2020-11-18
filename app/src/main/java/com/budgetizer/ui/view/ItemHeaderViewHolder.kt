@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package com.budgetizer.ui.entry
+package com.budgetizer.ui.view
 
 import androidx.recyclerview.widget.RecyclerView
 import com.budgetizer.R
 import com.budgetizer.core.data.entry.model.EntryRange
-import com.budgetizer.databinding.ItemEntryRangeBinding
+import com.budgetizer.databinding.ItemHeaderBinding
 
-class EntryRangeViewHolder(
-    private val binding: ItemEntryRangeBinding
+class ItemHeaderViewHolder(
+    private val binding: ItemHeaderBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(entryRangeItem: EntryRangeItem) {
-        binding.range.text = binding.root.context.resources.getStringArray(R.array.entry_ranges)[EntryRange.valueOf(
-            entryRangeItem.range.name
-        ).ordinal]
+    fun bind(value: String) {
+        binding.header.text = value
     }
 }

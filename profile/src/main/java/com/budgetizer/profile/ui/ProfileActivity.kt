@@ -54,11 +54,14 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initBindingEvents() {
         binding.save.setOnClickListener {
+            if (!isInputsValid()) return@setOnClickListener
+
             viewModel.saveProfile(
                 Profile(
                     givenName = binding.givenName.editText?.text.toString(),
                     familyName = binding.familyName.editText?.text.toString(),
-                    grossMonthlyIncome = binding.grossMonthlyIncome.editText?.text.toString().toDouble()
+                    grossMonthlyIncome = binding.grossMonthlyIncome.editText?.text.toString()
+                        .toDouble()
                 )
             )
 
@@ -72,5 +75,22 @@ class ProfileActivity : AppCompatActivity() {
         binding.givenName.editText?.setText(profile.givenName)
         binding.familyName.editText?.setText(profile.familyName)
         binding.grossMonthlyIncome.editText?.setText(profile.grossMonthlyIncome.toString())
+    }
+
+    private fun isInputsValid(): Boolean {
+        if (binding.givenName.editText?.text?.isEmpty() == true) {
+            binding.givenName.error = getString(com.budgetizer.core.R.string.error_required_fields)
+            return false
+        }
+        if (binding.familyName.editText?.text?.isEmpty() == true) {
+            binding.familyName.error = getString(com.budgetizer.core.R.string.error_required_fields)
+            return false
+        }
+        if (binding.grossMonthlyIncome.editText?.text?.isEmpty() == true) {
+            binding.grossMonthlyIncome.error = getString(com.budgetizer.core.R.string.error_required_fields)
+            return false
+        }
+
+        return true
     }
 }

@@ -10,4 +10,9 @@
         android:icon="@drawable/ic_baseline_show_chart_24"
         android:orderInCategory="2"
         android:title="@string/menu_chart" />
+    <item
+        android:id="@+id/challengeFragment"
+        android:icon="@drawable/ic_baseline_outlined_flag_24"
+        android:orderInCategory="3"
+        android:title="@string/menu_challenge" />
 </menu>

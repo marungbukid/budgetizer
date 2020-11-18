@@ -72,12 +72,11 @@ class EntryActivity : AppCompatActivity() {
             binding.contentNewEntry.amount.editText?.setText(entryToUpdate?.amount.toString())
             binding.contentNewEntry.name.editText?.setText(entryToUpdate?.label)
             binding.contentNewEntry.range.editText?.setText(resources.getStringArray(R.array.entry_ranges)[entryToUpdate?.entryRange?.ordinal!!])
-
-            // val entryTypeIndex = resources.getStringArray(R.array.entry_ranges).toList().indexOf(entryToUpdate?.type)
-            // binding.contentNewEntry.range.editText?.setText(enumValues<EntryType>()[entryTypeIndex].name)
         }
 
         binding.contentNewEntry.addEntry.setOnClickListener {
+            if (!isInputsValid()) return@setOnClickListener
+
             val entryType = binding.contentNewEntry.type.editText?.text.toString()
             val entryRange = binding.contentNewEntry.range.editText?.text.toString()
             val entryRangeIndex =
@@ -126,5 +125,26 @@ class EntryActivity : AppCompatActivity() {
         val ranges = resources.getStringArray(R.array.entry_ranges).toList()
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ranges)
         (binding.contentNewEntry.range.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+    }
+
+    private fun isInputsValid(): Boolean {
+        if (binding.contentNewEntry.type.editText?.text?.isEmpty() == true) {
+            binding.contentNewEntry.type.error = getString(R.string.error_required_fields)
+            return false
+        }
+        if (binding.contentNewEntry.name.editText?.text?.isEmpty() == true) {
+            binding.contentNewEntry.name.error = getString(R.string.error_required_fields)
+            return false
+        }
+        if (binding.contentNewEntry.amount.editText?.text?.isEmpty() == true) {
+            binding.contentNewEntry.amount.error = getString(R.string.error_required_fields)
+            return false
+        }
+        if (binding.contentNewEntry.range.editText?.text?.isEmpty() == true) {
+            binding.contentNewEntry.range.error = getString(R.string.error_required_fields)
+            return false
+        }
+
+        return true
     }
 }

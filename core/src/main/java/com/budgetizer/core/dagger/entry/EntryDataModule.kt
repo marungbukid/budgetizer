@@ -19,7 +19,7 @@ package com.budgetizer.core.dagger.entry
 import androidx.fragment.app.FragmentActivity
 import com.budgetizer.core.dagger.scope.FeatureScope
 import com.budgetizer.core.data.entry.EntryDao
-import com.budgetizer.core.data.entry.EntryDatabase
+import com.budgetizer.core.data.AppDatabase
 import com.budgetizer.core.entry.data.EntryLocalDataSource
 import com.budgetizer.core.entry.data.EntryRepository
 import dagger.Module
@@ -38,5 +38,5 @@ class EntryDataModule constructor(private val activity: FragmentActivity) {
     @Provides
     @FeatureScope
     fun provideEntryDao(): EntryDao =
-        EntryDatabase.getInstance(activity).entryDao()
+        AppDatabase.getInstance(activity).entryDao()
 }

@@ -57,5 +57,9 @@ android {
 dependencies {
     implementation project(":app")
     implementation project(":core")
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
     implementation "androidx.core:core-ktx:${versions.coreKtx}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 }

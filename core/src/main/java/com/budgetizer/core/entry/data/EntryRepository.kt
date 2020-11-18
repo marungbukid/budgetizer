@@ -31,6 +31,13 @@ class EntryRepository constructor(
         return Result.Error(Exception("Unable to fetch entries"))
     }
 
+    suspend fun getEntriesByTag(tag: String): Result<List<Entry>> {
+        val localEntries = localDataSource.getEntriesByTag(tag)
+        if (localEntries is Result.Success) return localEntries
+
+        return Result.Error(Exception("Unable to fetch entries"))
+    }
+
     suspend fun getMonthEntriesToDate(date: Date): Result<List<Entry>> {
         val localEntries = localDataSource.getMonthEntriesToDate(date)
         if (localEntries is Result.Success) return localEntries
@@ -42,8 +49,15 @@ class EntryRepository constructor(
         localDataSource.addEntry(entry)
     }
 
-    suspend fun updateEntry(entry: Entry) {
-        localDataSource.updateEntry(entry)
+    suspend fun updateEntry(entry: Entry): Result<Int> {
+        val updateResult = localDataSource.updateEntry(entry)
+        if (updateResult is Result.Success) return updateResult
+
+        return Result.Error(Exception("Unable to fetch entries"))
+    }
+
+    suspend fun deleteAllByTag(sourceTag: String) {
+        localDataSource.deleteEntryByTag(sourceTag)
     }
 
     companion object {

@@ -18,9 +18,11 @@ package com.budgetizer.dagger
 
 import com.budgetizer.core.dagger.CoreComponent
 import com.budgetizer.core.dagger.SharedPreferencesModule
+import com.budgetizer.core.dagger.challenge.ChallengeDataModule
 import com.budgetizer.core.dagger.entry.EntryDataModule
 import com.budgetizer.core.dagger.scope.FeatureScope
 import com.budgetizer.ui.HomeActivity
+import com.budgetizer.ui.challenge.ChallengeFragment
 import com.budgetizer.ui.entry.EntriesFragment
 import com.budgetizer.ui.stats.StatsFragment
 import dagger.Component
@@ -35,6 +37,7 @@ interface HomeComponent {
     interface Builder {
         fun coreComponent(module: CoreComponent): Builder
         fun entryDataModule(module: EntryDataModule): Builder
+        fun challengeDataModule(module: ChallengeDataModule): Builder
         fun homeModule(module: HomeModule): Builder
         fun sharedPreferencesModule(module: SharedPreferencesModule): Builder
         fun build(): HomeComponent
@@ -43,4 +46,5 @@ interface HomeComponent {
     fun inject(into: HomeActivity)
     fun inject(into: EntriesFragment)
     fun inject(into: StatsFragment)
+    fun inject(into: ChallengeFragment)
 }

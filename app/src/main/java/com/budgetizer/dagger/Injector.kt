@@ -17,9 +17,11 @@
 package com.budgetizer.dagger
 
 import com.budgetizer.core.dagger.SharedPreferencesModule
+import com.budgetizer.core.dagger.challenge.ChallengeDataModule
 import com.budgetizer.core.dagger.entry.EntryDataModule
 import com.budgetizer.core.profile.data.ProfileLocalDataSource
 import com.budgetizer.ui.HomeActivity
+import com.budgetizer.ui.challenge.ChallengeFragment
 import com.budgetizer.ui.coreComponent
 import com.budgetizer.ui.entry.EntriesFragment
 import com.budgetizer.ui.stats.StatsFragment
@@ -29,6 +31,7 @@ fun inject(into: HomeActivity) {
         .coreComponent(into.coreComponent())
         .homeModule(HomeModule(into))
         .entryDataModule(EntryDataModule(into))
+        .challengeDataModule(ChallengeDataModule(into))
         .sharedPreferencesModule(
             SharedPreferencesModule(
                 into,
@@ -44,6 +47,7 @@ fun inject(into: EntriesFragment) {
         .coreComponent(into.requireActivity().coreComponent())
         .homeModule(HomeModule(into.requireActivity()))
         .entryDataModule(EntryDataModule(into.requireActivity()))
+        .challengeDataModule(ChallengeDataModule(into.requireActivity()))
         .sharedPreferencesModule(
             SharedPreferencesModule(
                 into.requireContext(),
@@ -59,6 +63,23 @@ fun inject(into: StatsFragment) {
         .coreComponent(into.requireActivity().coreComponent())
         .homeModule(HomeModule(into.requireActivity()))
         .entryDataModule(EntryDataModule(into.requireActivity()))
+        .challengeDataModule(ChallengeDataModule(into.requireActivity()))
+        .sharedPreferencesModule(
+            SharedPreferencesModule(
+                into.requireContext(),
+                ProfileLocalDataSource.PROFILE_PREFS
+            )
+        )
+        .build()
+        .inject(into)
+}
+
+fun inject(into: ChallengeFragment) {
+    DaggerHomeComponent.builder()
+        .coreComponent(into.requireActivity().coreComponent())
+        .homeModule(HomeModule(into.requireActivity()))
+        .entryDataModule(EntryDataModule(into.requireActivity()))
+        .challengeDataModule(ChallengeDataModule(into.requireActivity()))
         .sharedPreferencesModule(
             SharedPreferencesModule(
                 into.requireContext(),

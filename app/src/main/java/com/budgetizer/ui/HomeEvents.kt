@@ -16,10 +16,10 @@
 
 package com.budgetizer.ui
 
+import com.budgetizer.core.data.challenge.model.Challenge
 import com.budgetizer.core.data.entry.model.Entry
 
 sealed class HomeEvents {
-
-    data class EntriesUpdate(val entries: List<Entry>) : HomeEvents()
     data class MonthEntriesUpdate(val entries: List<Entry>) : HomeEvents()
+    data class ChallengesFetched(val items: List<Challenge>) : HomeEvents()
 }

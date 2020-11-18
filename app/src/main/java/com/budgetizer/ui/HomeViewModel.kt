@@ -20,18 +20,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.budgetizer.core.challenge.data.ChallengeRepository
 import com.budgetizer.core.data.CoroutinesDispatcherProvider
 import com.budgetizer.core.data.Result
+import com.budgetizer.core.data.challenge.model.Challenge
 import com.budgetizer.core.entry.data.EntryRepository
 import com.budgetizer.core.profile.data.ProfileRepository
 import com.budgetizer.core.profile.data.model.Profile
-import java.util.Date
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Date
 
 class HomeViewModel constructor(
     private val profileRepository: ProfileRepository,
     private val entryRepository: EntryRepository,
+    private val challengeRepository: ChallengeRepository,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : ViewModel() {
 
@@ -57,18 +60,25 @@ class HomeViewModel constructor(
         }
     }
 
-    fun getEntriesByDate(date: Date) = viewModelScope.launch(dispatcherProvider.computation) {
-        val result = entryRepository.getEntriesByDate(date)
+    fun getChallenges() = viewModelScope.launch(dispatcherProvider.computation) {
+        val result = challengeRepository.getChallenges()
 
         withContext(dispatcherProvider.main) {
             when (result) {
                 is Result.Success ->
-                    emitUiEvents(HomeEvents.EntriesUpdate(result.data))
+                    emitUiEvents(HomeEvents.ChallengesFetched(result.data))
                 is Result.Error -> {
                 }
             }
         }
     }
+
+    fun insertChallenges(items: List<Challenge>) =
+        viewModelScope.launch(dispatcherProvider.computation) {
+            items.forEach {
+                challengeRepository.addChallenge(it)
+            }
+        }
 
     private fun emitUiEvents(event: HomeEvents) {
         _events.value = event

@@ -161,8 +161,6 @@ class StatsFragment : Fragment() {
             val events = _events ?: return@observe
 
             when (events) {
-                is HomeEvents.EntriesUpdate -> {
-                }
                 is HomeEvents.MonthEntriesUpdate -> {
                     val manager = EntriesManager(events.entries)
 

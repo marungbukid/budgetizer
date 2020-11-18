@@ -33,7 +33,7 @@ class StatsItemViewHolder(
     private val adapter = StatsChartAdapter()
 
     fun bind(item: EntryHolder) {
-        binding.itemEntryRange.range.text =
+        binding.itemHeader.header.text =
             binding.root.context.resources.getStringArray(R.array.entry_stat_ranges)[EntryRange.valueOf(
                 item.range.name
             ).ordinal]

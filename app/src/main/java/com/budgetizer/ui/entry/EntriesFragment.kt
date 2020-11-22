@@ -139,19 +139,15 @@ class EntriesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if (!viewModel.hasProfile()) {
+            startActivity(intentTo(Activities.Profile))
+        }
         fetchEntries()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         setupToolbar()
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        if (!viewModel.hasProfile()) {
-            startActivity(intentTo(Activities.Profile))
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

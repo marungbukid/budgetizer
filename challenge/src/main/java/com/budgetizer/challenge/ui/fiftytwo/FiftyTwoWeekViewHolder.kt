@@ -33,10 +33,7 @@ class FiftyTwoWeekViewHolder(
             )
         } else {
             binding.root.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    binding.root.context,
-                    com.budgetizer.core.R.color.color_surface
-                )
+                ContextCompat.getColor(binding.root.context, com.budgetizer.core.R.color.card_background)
             )
         }
     }

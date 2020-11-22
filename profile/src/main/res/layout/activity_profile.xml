@@ -7,6 +7,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="128dp"
+        android:background="?colorPrimary"
         android:theme="@style/Theme.Budgetizer.Overlay">
 
         <LinearLayout
@@ -16,7 +17,8 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             android:paddingStart="@dimen/spacing_extra_large"
             android:paddingTop="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_extra_large">
+            android:paddingEnd="@dimen/spacing_extra_large"
+            android:theme="@style/Theme.Budgetizer.Overlay">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/greetings"

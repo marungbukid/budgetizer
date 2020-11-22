@@ -2,11 +2,7 @@
 <resources>
     <style name="Theme.Budgetizer.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:fontFamily">@font/source_sans_pro</item>
-        <item name="android:colorBackground">@color/color_background</item>
-        <item name="android:windowBackground">@color/background_light</item>
-
         <item name="fontFamily">@font/source_sans_pro</item>
-        <item name="colorSurface">@color/color_surface</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
     <style name="Theme.Budgetizer.Home" />

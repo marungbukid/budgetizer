@@ -3,4 +3,6 @@
 
 <!--    <color name="color_surface">@color/background_dark</color>-->
 <!--    <color name="color_background">#ff292929</color>-->
+    <color name="text_primary_dark">#deffffff</color>
+    <color name="card_background">@color/cardview_dark_background</color>
 </resources>

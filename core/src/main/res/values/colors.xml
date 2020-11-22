@@ -29,4 +29,6 @@
 
     <color name="background_light">#fafafa</color>
     <color name="background_dark">#ff333333</color>
+
+    <color name="card_background">@color/cardview_light_background</color>
 </resources>
